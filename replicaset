@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: ReplicaSet 
+metadata:
+  name: sam
+  namespace: prod
+  labels:
+    app: app 
+    env: prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      sai: sai
+  template:
+    metadata:
+      labels:
+        sai: sai
+    spec:
+      containers:
+        - name: sam
+          image: dilipdara/image1
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1 
+kind: Service
+metadata:
+  name: git
+  namespace: prod
+spec:
+  type: LoadBalancer
+  selector:
+    sai: sai
+  ports:
+    - port: 8080
+      targetPort: 8080
