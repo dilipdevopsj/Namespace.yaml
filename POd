@@ -1,0 +1,44 @@
+namespace:
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jos
+  labels:
+    app: app
+    env: prod
+---
+pod:
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jos
+  namespace: prod
+  labels:
+    app: app
+    env: prod
+spec:
+  containers:
+    - name: men
+      image: dilipdara/image1
+      ports:
+        - containerPort: 8080
+---
+service:
+apiVersion: v1
+kind: Service
+metadata:
+  name: jos
+  namespace: prod
+  labels:
+    app: app
+    env: prod
+spec:
+  type: LoadBalancer
+  selector:
+    app: app
+    env: prod
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
